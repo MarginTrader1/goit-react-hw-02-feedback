@@ -3,6 +3,7 @@ import { Component } from 'react';
 import { SectionTitle } from './SectionTitle/SectionTitle';
 import { Statistics } from './Statistics/Statistic';
 import { Feedback } from './FeedBackOptions/FeedBackOptions';
+import { Notification } from './Notification/Notification';
 
 export class App extends Component {
   state = {
@@ -12,40 +13,48 @@ export class App extends Component {
   };
 
   goodFeedback = () => {
-    this.setState(state => ({ good: this.state.good + 1 }));
+    this.setState(state => ({ good: state.good + 1 }));
   };
 
   neutralFeedback = () => {
-    this.setState(state => ({ neutral: this.state.neutral + 1 }));
+    this.setState(state => ({ neutral: state.neutral + 1 }));
   };
 
   badFeedback = () => {
-    this.setState(state => ({ bad: this.state.bad + 1 }));
-  };
-
-  countPositiveFeedbackPercentage = () => {
-    const positiveFeedback = Math.round(
-      (this.state.good /
-        (this.state.good + this.state.neutral + this.state.bad)) *
-        100
-    );
-    this.setState(state => ({ positiveFeedback: positiveFeedback }));
+    this.setState(state => ({ bad: state.bad + 1 }));
   };
 
   render() {
-    return (
-      <>
-        <SectionTitle title="Please leave feedback">
-          <Feedback
-            goodFeedback={this.goodFeedback}
-            neutralFeedback={this.neutralFeedback}
-            badFeedback={this.badFeedback}
-          />
-        </SectionTitle>
-        <SectionTitle title="Statistic">
-          <Statistics data={this.state} />
-        </SectionTitle>
-      </>
-    );
+    if (this.state.good > 0 || this.state.neutral > 0 || this.state.bad > 0) {
+      return (
+        <>
+          <SectionTitle title="Please leave feedback">
+            <Feedback
+              goodFeedback={this.goodFeedback}
+              neutralFeedback={this.neutralFeedback}
+              badFeedback={this.badFeedback}
+            />
+          </SectionTitle>
+          <SectionTitle title="Statistic">
+            <Statistics data={this.state} />
+          </SectionTitle>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <SectionTitle title="Please leave feedback">
+            <Feedback
+              goodFeedback={this.goodFeedback}
+              neutralFeedback={this.neutralFeedback}
+              badFeedback={this.badFeedback}
+            />
+          </SectionTitle>
+          <SectionTitle>
+            <Notification title="There is no feedback" />
+          </SectionTitle>
+        </>
+      );
+    }
   }
 }

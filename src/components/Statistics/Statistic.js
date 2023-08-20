@@ -1,13 +1,26 @@
-export const Statistics = ({data}) => {
-const { good, neutral, bad } = data;
+import { Li } from './Statistic.styled';
+
+export const Statistics = ({ data }) => {
+  const { good, neutral, bad } = data;
   return (
     <>
       <ul>
-        <li>Good: {good}</li>
-        <li>Neutral: {neutral}</li>
-        <li>Bad: {bad}</li>
-        <li>Total: {good + neutral + bad}</li>
-        <li>Positive feedback: {Math.round(good/(good + neutral + bad)*100)}%</li>
+        <Li>
+          <b>Good:</b> {good}
+        </Li>
+        <Li>
+          <b>Neutral:</b> {neutral}
+        </Li>
+        <Li>
+          <b>Bad:</b> {bad}
+        </Li>
+        <Li>
+          <b>Total:</b> {good + neutral + bad}
+        </Li>
+        <Li>
+          <b>Positive feedback:</b>{' '}
+          {Math.round((good / (good + neutral + bad)) * 100)}%
+        </Li>
       </ul>
     </>
   );
