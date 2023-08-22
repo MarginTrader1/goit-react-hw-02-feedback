@@ -12,6 +12,7 @@ export class App extends Component {
     bad: 0,
   };
 
+  // методы изменение state
   goodFeedback = () => {
     this.setState(state => ({ good: state.good + 1 }));
   };
@@ -25,6 +26,7 @@ export class App extends Component {
   };
 
   render() {
+    // проверяем значения state во время рендера компонентов, если есть фидбэки -> рендерим статистику фидбэков
     if (this.state.good > 0 || this.state.neutral > 0 || this.state.bad > 0) {
       return (
         <>
@@ -40,6 +42,7 @@ export class App extends Component {
           </SectionTitle>
         </>
       );
+      // если фидбэков нет -> рендерим компонент Notification
     } else {
       return (
         <>
