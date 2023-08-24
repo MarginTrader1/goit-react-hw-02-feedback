@@ -1,8 +1,12 @@
 import { styled } from 'styled-components';
 
-export const List = styled.div`
+export const List = styled.ul`
   display: flex;
   gap: 20px;
+`;
+
+export const Li = styled.li`
+  list-style: none;
 `;
 
 export const Button = styled.button`

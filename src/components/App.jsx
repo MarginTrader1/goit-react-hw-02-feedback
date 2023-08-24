@@ -12,33 +12,45 @@ export class App extends Component {
     bad: 0,
   };
 
-  // методы изменение state
-  goodFeedback = () => {
-    this.setState(state => ({ good: state.good + 1 }));
+  countTotalFeedback = (good, neutral, bad) => {
+    const total = good + neutral + bad;
+    return total;
   };
 
-  neutralFeedback = () => {
-    this.setState(state => ({ neutral: state.neutral + 1 }));
+  countPositiveFeedbackPercentage = (good, neutral, bad) => {
+    const positivePercentage = Math.round(
+      (good / (good + neutral + bad)) * 100
+    );
+    return positivePercentage;
   };
 
-  badFeedback = () => {
-    this.setState(state => ({ bad: state.bad + 1 }));
+  // метод изменение state
+  addFeedback = value => {
+    this.setState(prevState => {
+      return {
+        [value]: prevState[value] + 1,
+      };
+    });
   };
 
   render() {
+    const { good, neutral, bad } = this.state;
+
     // проверяем значения state во время рендера компонентов, если есть фидбэки -> рендерим статистику фидбэков
-    if (this.state.good > 0 || this.state.neutral > 0 || this.state.bad > 0) {
+    if (good > 0 || neutral > 0 || bad > 0) {
       return (
         <>
           <SectionTitle title="Please leave feedback">
-            <Feedback
-              goodFeedback={this.goodFeedback}
-              neutralFeedback={this.neutralFeedback}
-              badFeedback={this.badFeedback}
-            />
+            <Feedback data={this.state} addFeedback={this.addFeedback} />
           </SectionTitle>
           <SectionTitle title="Statistic">
-            <Statistics data={this.state} />
+            <Statistics
+              good={good}
+              neutral={neutral}
+              bad={bad}
+              total={this.countTotalFeedback}
+              positivePercentage={this.countPositiveFeedbackPercentage}
+            />
           </SectionTitle>
         </>
       );
@@ -47,11 +59,7 @@ export class App extends Component {
       return (
         <>
           <SectionTitle title="Please leave feedback">
-            <Feedback
-              goodFeedback={this.goodFeedback}
-              neutralFeedback={this.neutralFeedback}
-              badFeedback={this.badFeedback}
-            />
+            <Feedback data={this.state} addFeedback={this.addFeedback} />
           </SectionTitle>
           <SectionTitle>
             <Notification title="There is no feedback" />

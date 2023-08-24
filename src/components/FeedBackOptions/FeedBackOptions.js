@@ -1,12 +1,17 @@
-import { List, Button } from "./FeedBackOptions.styled";
+import { List, Li, Button } from './FeedBackOptions.styled';
+import { nanoid } from 'nanoid';
 
-export const Feedback = ({ goodFeedback, neutralFeedback, badFeedback}) => {
+export const Feedback = ({ addFeedback, data }) => {
   return (
     <>
       <List>
-        <Button type="button" onClick={goodFeedback}>Good</Button>
-        <Button type="button" onClick={neutralFeedback}>Neutral</Button>
-        <Button type="button" onClick={badFeedback}>Bad</Button>
+        {Object.keys(data).map(key => (
+          <Li key={nanoid()}>
+            <Button type="button" onClick={() => addFeedback(key)}>
+              {key}
+            </Button>
+          </Li>
+        ))}
       </List>
     </>
   );

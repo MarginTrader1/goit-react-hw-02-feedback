@@ -1,25 +1,30 @@
 import { Li } from './Statistic.styled';
+import { nanoid } from 'nanoid';
 
-export const Statistics = ({ data }) => {
-  const { good, neutral, bad } = data;
+export const Statistics = ({
+  good,
+  neutral,
+  bad,
+  total,
+  positivePercentage,
+}) => {
   return (
     <>
       <ul>
-        <Li>
+        <Li key={nanoid()}>
           <b>Good:</b> {good}
         </Li>
-        <Li>
+        <Li key={nanoid()}>
           <b>Neutral:</b> {neutral}
         </Li>
-        <Li>
+        <Li key={nanoid()}>
           <b>Bad:</b> {bad}
         </Li>
-        <Li>
-          <b>Total:</b> {good + neutral + bad}
+        <Li key={nanoid()}>
+          <b>Total:</b> {total(good, neutral, bad)}
         </Li>
-        <Li>
-          <b>Positive feedback:</b>{' '}
-          {Math.round((good / (good + neutral + bad)) * 100)}%
+        <Li key={nanoid()}>
+          <b>Positive feedback:</b> {positivePercentage(good, neutral, bad)}%
         </Li>
       </ul>
     </>
